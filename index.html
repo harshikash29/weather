@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather</title>
+    <link rel="stylesheet" href="./style.css">
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        <form id="weather-form">
+            <input type="text" id="city-input" placeholder="Enter city" required>
+            <button onclick="getWeather()">Get Weather</button>
+        </form>
+        <div id="weather-result">
+            <!-- Weather information will be displayed here -->
+        </div>
+    </div>
+
+<script>
+  const weatherimage={
+      Thunderstorm:"images\thunder.jpg",
+      Drizzle:"images\drizzle.jpg",
+      Rain:"images\rain.jpg",
+      Snow:"images\snow.jpg",
+      Clear:"images\clear.jpg",
+      Clouds:"images\clouds.jpg",
+      Haze:"images\haze.jpg",
+      
+  }
+
+  
+
+    async function getWeather() {
+        const city = document.getElementById('city-input').value;
+        console.log(city)
+        if (!city) {
+          alert('Please enter a city name');
+          return;
+        }
+        event.preventDefault();
+ 
+        try {
+          const response = await fetch(`http://localhost:3010/weather?city=${city}`,{ method: "POST"})
+          console.log("step1",response)
+          if (!response.ok) {
+            throw new Error('Weather data could not be fetched');
+          }
+          const data = await response.json();
+          console.log("step2",data)
+          displayWeather(data);
+         
+          
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Error fetching weather data1');
+        }
+      }
+   
+      function displayWeather(data) {
+        console.log("this is console")
+        const weatherResult = document.getElementById('weather-result');
+        weatherResult.innerHTML = `
+          <p> CITY:${data.city}</p>
+          <p> TEMPERATURE: ${data.temperature}°C</p>
+          <p> WEATHER: ${data.weather}</p>
+        `;
+      }
+
+
+
+
+
+
+      function updateBackground(weatherCond) {
+      const body = document.body;
+      const imageUrl =weatherimage[weatherCond] || "E:\dir\weather\clear.jpg"; 
+      console.log("imageeee",imageUrl)
+      document.body.style.backgroundImage = url(`${imageUrl}`);
+    }
+    </script>
+
+
+</body>
+</html>
