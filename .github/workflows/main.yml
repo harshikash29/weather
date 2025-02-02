@@ -1,17 +1,18 @@
- main.yml
- name:Test Action
+name: Test Action
 
- on:
-   push:
-     branches:
-       - main  # or any branch you want to trigger the action
+on:
+  push:
+    branches:
+      - main  # Trigger the action on push to the 'main' branch
 
- jobs:
-   test:
-     runs-on: ubuntu-latest
-     steps:
-       - name: Checkout code
-         uses: actions/checkout@v3
+jobs:
+  test:
+    runs-on: ubuntu-latest  # The job will run on the latest Ubuntu runner
 
-       - name: 22f3002954@ds.study.iitm.ac.in
-         run: echo "Hello, world!"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # This step checks out your repository's code
+
+      - name: 22f3002954@ds.study.iitm.ac.in
+        run: echo "Hello, world!"  # This step simply prints "Hello, world!" to the log
+
